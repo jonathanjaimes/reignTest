@@ -4,15 +4,13 @@ import MyFaves from "./Components/MyFaves";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { Checkbox, ListItemText } from "@mui/material";
+import Select from "@mui/material/Select";
 
 function App() {
   const [techSelected, setTechSelected] = React.useState("");
   const [showFaves, setShowFaves] = React.useState(false);
 
   const handleChange = (e) => {
-    console.log(e.target.value);
     setTechSelected(e.target.value);
     localStorage.setItem("techSelected", e.target.value);
   };
@@ -64,7 +62,7 @@ function App() {
             border: !showFaves ? "solid 1px #1797ff" : "solid 1px #d6d6d6",
             display: "flex",
             justifyContent: "center",
-            cursor:"pointer"
+            cursor: "pointer",
           }}
         >
           <span
@@ -98,7 +96,7 @@ function App() {
             border: showFaves ? "solid 1px #1797ff" : "solid 1px #d6d6d6",
             display: "flex",
             justifyContent: "center",
-            cursor:"pointer"
+            cursor: "pointer",
           }}
         >
           <span
@@ -139,24 +137,39 @@ function App() {
                 onChange={handleChange}
               >
                 <MenuItem value="angular">
-                <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
-                  <img src="img/angular.jpg"/>
-                  <p style={{margin: "0 0 0 20px"}}>Angular</p>
-
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <img src="img/angular.jpg" />
+                    <p style={{ margin: "0 0 0 20px" }}>Angular</p>
                   </div>
                 </MenuItem>
                 <MenuItem value="react">
-                <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
-                  <img src="img/react.jpg"/>
-                  <p style={{margin: "0 0 0 20px"}}>React</p>
-
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <img src="img/react.jpg" />
+                    <p style={{ margin: "0 0 0 20px" }}>React</p>
                   </div>
                 </MenuItem>
                 <MenuItem value="vue">
-                <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
-                  <img src="img/vue.jpg"/>
-                  <p style={{margin: "0 0 0 20px"}}>Vue</p>
-
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <img src="img/vue.jpg" />
+                    <p style={{ margin: "0 0 0 20px" }}>Vue</p>
                   </div>
                 </MenuItem>
               </Select>

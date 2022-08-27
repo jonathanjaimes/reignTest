@@ -1,6 +1,5 @@
 import React from "react";
 import Pagination from "@mui/material/Pagination";
-import Moment from "react-moment";
 import moment from "moment";
 import { CircularProgress } from "@mui/material";
 
@@ -23,7 +22,6 @@ const All = (props) => {
     )
       .then((response) => response.json())
       .then((data) => {
-        // console.log(data.hits, "hits");
         refTotalPages.current = data.nbPages;
         setTotalPages(refTotalPages.current);
 
@@ -41,7 +39,6 @@ const All = (props) => {
       indexSelected = index;
       return el.story_title == storyTitle && el.comment_text == commentText;
     });
-    console.log(existe, "hola");
     if (existe == undefined) {
       refSaved.current?.push({
         created_at: createdAt,
@@ -50,13 +47,11 @@ const All = (props) => {
         comment_text: commentText,
       });
       localStorage.setItem("newsSelected", JSON.stringify(refSaved.current));
-      console.log(refSaved.current, "guardados");
     } else {
       refSaved.current = refSaved.current.filter(
         (elem, index) => index != indexSelected
       );
       localStorage.setItem("newsSelected", JSON.stringify(refSaved.current));
-      console.log(refSaved.current, "guardados");
     }
   }
 
@@ -64,22 +59,27 @@ const All = (props) => {
     peticion(props.techSelected, 1);
     refActualPage.current = 1;
     setActualPage(refActualPage.current);
-    console.log("abro all");
 
     if (!(JSON.parse(localStorage.getItem("newsSelected")) == null)) {
       refSaved.current = JSON.parse(localStorage.getItem("newsSelected"));
     }
-
-    console.log(refSaved.current, "noticias guardadas actuales");
   }, [props.techSelected]);
 
-  React.useEffect(() => {
-    console.log("hola");
-  }, [flagShowHeart]);
+  React.useEffect(() => {}, [flagShowHeart]);
 
   return (
     <>
-      {loading && <div style={{display:"flex", justifyContent:"center", margin:"40px 0"}}><CircularProgress /></div>}
+      {loading && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            margin: "40px 0",
+          }}
+        >
+          <CircularProgress />
+        </div>
+      )}
 
       {!loading && (
         <div>
@@ -92,18 +92,6 @@ const All = (props) => {
             }}
           >
             {news?.map((notice, index) => {
-              // console.log(refSaved.current[0].comment_text, "guar")
-              // console.log(notice.comment_text, "noticia")
-              console.log(
-                refSaved.current.find(
-                  (el) =>
-                    el.story_title == (notice.story_title || notice.title) &&
-                    el.comment_text == notice.comment_text
-                ),
-                "objetivo"
-              );
-              console.log("casita");
-              console.log(news, "noticias api");
               return (
                 <div
                   key={index}
@@ -225,7 +213,6 @@ const All = (props) => {
               window.scrollTo(0, 0);
               setActualPage(value);
               peticion(props.techSelected, value);
-              // console.log(value, "cambio")
             }}
           />
         </div>

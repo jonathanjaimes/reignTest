@@ -6,7 +6,6 @@ const MyFaves = (props) => {
   const refActualFaves = React.useRef([]);
   const [newsFaves, setNewsFaves] = React.useState([]);
   const [maxPage, setMaxPage] = React.useState();
-  const refActualPage = React.useRef();
   const [actualPage, setActualPage] = React.useState(1);
   const [infLim, setInfLim] = React.useState(0);
   const [supLim, setSupLim] = React.useState(8);
@@ -20,17 +19,12 @@ const MyFaves = (props) => {
       "newsSelected",
       JSON.stringify(refActualFaves.current)
     );
-    // console.log(refActualFaves.current, "actuales guardados")
   }
 
   React.useEffect(() => {
-    // console.log("entra");
-
     setNewsFaves(JSON.parse(localStorage.getItem("newsSelected")));
 
     setMaxPage(Math.ceil(newsFaves?.length / 8));
-    // console.log(newsFaves.length, "cantidad items");
-    // console.log(Math.ceil(newsFaves.length / 2), "division");
   }, []);
 
   React.useEffect(() => {
@@ -66,7 +60,13 @@ const MyFaves = (props) => {
                 justifyContent: "space-between",
               }}
             >
-              <div style={{ wordBreak: "break-word", width: "30.125rem", padding: "1.5rem 0", }}>
+              <div
+                style={{
+                  wordBreak: "break-word",
+                  width: "30.125rem",
+                  padding: "1.5rem 0",
+                }}
+              >
                 <span
                   style={{
                     display: "block",
@@ -94,17 +94,16 @@ const MyFaves = (props) => {
                     lineHeight: "1.43",
                     letterSpacing: "0.25px",
                     color: "#6b6b6b",
-                    cursor:"pointer"
+                    cursor: "pointer",
                   }}
-                  onClick={()=>{
-                    window.open(notice.story_url)
+                  onClick={() => {
+                    window.open(notice.story_url);
                   }}
                 >
                   {notice.story_title}
                 </span>
               </div>
               <div
-                
                 style={{
                   width: "4.25rem",
 
@@ -113,14 +112,17 @@ const MyFaves = (props) => {
                   borderRadius: "6px",
                   border: "solid 1px #f2f2f2",
                   backgroundColor: "#f2f2f2",
-                  display:"flex",
-                  justifyContent:"center",
-                  alignItems:"center"
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
-                <img onClick={() => {
-                  deleteNewsStorage(index);
-                }} src="img/trash.png"/>
+                <img
+                  onClick={() => {
+                    deleteNewsStorage(index);
+                  }}
+                  src="img/trash.png"
+                />
               </div>
             </div>
           );
@@ -137,8 +139,6 @@ const MyFaves = (props) => {
             setActualPage(value);
             setInfLim((value - 1) * 8);
             setSupLim((value + 1) * 8 - 8);
-            // console.log((value -1)*8, ((value+1)*8)-8)
-            // console.log(newsFaves.slice((value -1)*2, ((value+1)*2)-2))
           }}
         />
       )}
