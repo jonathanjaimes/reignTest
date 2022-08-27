@@ -16,8 +16,9 @@ function App() {
   };
 
   React.useEffect(() => {
-    let tec = localStorage.getItem("techSelected");
-    setTechSelected(tec);
+    if (localStorage.getItem("techSelected") != null) {
+      setTechSelected(localStorage.getItem("techSelected"));
+    }
   }, []);
 
   return (
@@ -179,7 +180,7 @@ function App() {
       )}
 
       <div style={{ padding: "0 10% 0 10%", margin: "0 0 5rem 0" }}>
-        {techSelected.length > 0 && !showFaves && (
+        {techSelected?.length > 0 && !showFaves && (
           <All techSelected={techSelected} />
         )}
         {showFaves && <MyFaves />}
