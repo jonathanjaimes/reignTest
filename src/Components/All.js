@@ -22,7 +22,7 @@ const All = (props) => {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.hits, "hits");
+        // console.log(data.hits, "hits");
         refTotalPages.current = data.nbPages;
         setTotalPages(refTotalPages.current);
 
@@ -50,7 +50,7 @@ const All = (props) => {
         "newsSelected",
         JSON.stringify(refSavedNews.current)
       );
-      // console.log(refSavedNews.current, "guardados")
+      console.log(refSavedNews.current, "guardados")
     } else {
       // console.log(indexSelected, "indice seleccionado")
       refSavedNews.current = refSavedNews.current.filter(
@@ -60,7 +60,7 @@ const All = (props) => {
         "newsSelected",
         JSON.stringify(refSavedNews.current)
       );
-      // console.log(refSavedNews.current, "guardados")
+      console.log(refSavedNews.current, "guardados")
     }
   }
 
@@ -71,69 +71,114 @@ const All = (props) => {
   }, [props.techSelected]);
 
   return (
-    <div>
-      {news?.map((notice, index) => {
-        return (
-          <div
-            key={index}
-            style={{
-              width: "34.375rem",
-              height: "auto",
-              margin: "2.375rem 2.5rem 1.875rem 9.375rem",
-              padding: "0 0 0 1.625rem",
-              opacity: "0.8",
-              borderRadius: "6px",
-              border: "solid 1px #979797",
-              backgroundColor: "#fff",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-            onClick={() => {
-              saveNewsStorage(
-                notice.created_at,
-                notice.story_title,
-                notice.story_url,
-                notice.comment_text
-              );
-            }}
-          >
-            <div style={{wordBreak:"break-word"}}>
-              <p>{notice.created_at}</p>
-              <p>{notice.story_title}</p>
-              <p>{notice.story_url}</p>
-            </div>
+    <>
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          // backgroundColor: "red",
+          justifyContent: "space-between",
+          padding: "0 5% 0 5%",
+        }}
+      >
+        {news?.map((notice, index) => {
+          return (
             <div
+              key={index}
               style={{
-                width: "4.25rem",
-
-                margin: "0 0 0 1rem",
-                padding: "2.188rem 1.375rem 2.063rem",
-                opacity: "0.06",
+                width: "90%",
+                maxWidth: "30.375rem",
+                minHeight: "5.625rem",
+                height: "auto",
+                margin: "2.375rem 1rem 1.875rem 1rem",
+                padding: "0 0 0 1.625rem",
+                opacity: "0.8",
                 borderRadius: "6px",
-                border: "solid 1px #606060",
-                backgroundColor: "#606060",
+                border: "solid 1px #979797",
+                backgroundColor: "#fff",
+                display: "flex",
+                justifyContent: "space-between",
               }}
+              
             >
-              cuadrito
-            </div>
-          </div>
-        );
-      })}
+              <div
+                style={{
+                  wordBreak: "break-word",
+                  width: "30.125rem",
+                  padding: "1.5rem 0",
+                }}
+              >
+                <span
+                  style={{
+                    display: "block",
+                    fontFamily: "Roboto",
+                    fontSize: "11px",
+                    fontWeight: "normal",
+                    fontStretch: "normal",
+                    fontStyle: "normal",
+                    lineHeight: "normal",
+                    letterSpacing: "normal",
+                    color: "#767676",
+                  }}
+                >
+                  {notice.created_at}
+                </span>
+                <span
+                  style={{
+                    display: "block",
+                    padding: "0.7rem 0 0 0",
+                    fontFamily: "Roboto",
+                    fontSize: "14px",
+                    fontWeight: "500",
+                    fontStretch: "normal",
+                    fontStyle: "normal",
+                    lineHeight: "1.43",
+                    letterSpacing: "0.25px",
+                    color: "#6b6b6b",
+                  }}
+                >
+                  {notice.story_title || notice.title}
+                </span>
+              </div>
+              <div
+              onClick={() => {
+                saveNewsStorage(
+                  notice.created_at,
+                  notice.story_title || notice.title,
+                  notice.story_url,
+                  notice.comment_text
+                );
+              }}
+                style={{
+                  width: "4.25rem",
 
-      {/* {props.techSelected}
-    {totalPages} */}
+                  margin: "0 0 0 1rem",
+                  padding: "2.188rem 1.375rem 2.063rem",
+                  opacity: "0.06",
+                  borderRadius: "6px",
+                  border: "solid 1px #606060",
+                  backgroundColor: "#606060",
+                }}
+              >
+                cuadrito
+              </div>
+            </div>
+          );
+        })}
+      </div>
       <Pagination
         variant="outlined"
         shape="rounded"
         count={totalPages}
         page={actualPage}
         onChange={(e, value) => {
+          window.scrollTo(0, 0)
           setActualPage(value);
           peticion(props.techSelected, value);
           // console.log(value, "cambio")
         }}
       />
-    </div>
+    </>
   );
 };
 
