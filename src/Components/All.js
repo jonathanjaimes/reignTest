@@ -6,15 +6,10 @@ const All = (props) => {
   const [totalPages, setTotalPages] = React.useState();
   const refActualPage = React.useRef();
   const [actualPage, setActualPage] = React.useState(1);
-  // const refCreatedAt = React.useRef();
-  // const [createdAt, setCreatedAt] = React.useState();
-  // const refStoryTitle = React.useRef();
-  // const [storyTitle, setStoryTitle] = React.useState();
-  // const refStoryUrl = React.useRef();
-  // const [storyUrl, setStoryUrl] = React.useState();
   const refNews = React.useRef();
   const [news, setNews] = React.useState();
   const refSavedNews = React.useRef([]);
+  const refSaved = React.useRef([]);
 
   function peticion(tech, page) {
     fetch(
@@ -34,13 +29,13 @@ const All = (props) => {
   function saveNewsStorage(createdAt, storyTitle, storyUrl, commentText) {
     let indexSelected = undefined;
 
-    let existe = refSavedNews.current.find((el, index) => {
+    let existe = refSaved.current.find((el, index) => {
       indexSelected = index;
       return el.story_title == storyTitle && el.comment_text == commentText;
     });
 
     if (existe == undefined) {
-      refSavedNews.current.push({
+      refSaved.current.push({
         created_at: createdAt,
         story_title: storyTitle,
         story_url: storyUrl,
@@ -48,19 +43,19 @@ const All = (props) => {
       });
       localStorage.setItem(
         "newsSelected",
-        JSON.stringify(refSavedNews.current)
+        JSON.stringify(refSaved.current)
       );
-      console.log(refSavedNews.current, "guardados")
+      console.log(refSaved.current, "guardados")
     } else {
       // console.log(indexSelected, "indice seleccionado")
-      refSavedNews.current = refSavedNews.current.filter(
+      refSaved.current = refSaved.current.filter(
         (elem, index) => index != indexSelected
       );
       localStorage.setItem(
         "newsSelected",
-        JSON.stringify(refSavedNews.current)
+        JSON.stringify(refSaved.current)
       );
-      console.log(refSavedNews.current, "guardados")
+      console.log(refSaved.current, "guardados")
     }
   }
 
@@ -68,6 +63,9 @@ const All = (props) => {
     peticion(props.techSelected, 1);
     refActualPage.current = 1;
     setActualPage(refActualPage.current);
+    console.log("abro all")
+    refSaved.current = JSON.parse(localStorage.getItem("newsSelected"))
+    console.log(refSaved.current, "noticias guardadas actuales")
   }, [props.techSelected]);
 
   return (
