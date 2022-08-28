@@ -189,6 +189,18 @@ function App() {
         </>
       )}
 
+      {techSelected.length == 0 && (
+        <>
+          <div style={{ textAlign: "center", margin: "70px 0 0 0" }}>
+            <AnnouncementIcon sx={{ color: "red", fontSize: "60px" }} />
+          </div>
+          <p style={{ textAlign: "center", padding: "0 40px" }}>
+            If this is your first time on our site, you must choose a technology
+            from the list.
+          </p>
+        </>
+      )}
+
       <div style={{ padding: "0 10% 0 10%", margin: "0 0 5rem 0" }}>
         {techSelected?.length > 0 && !showFaves && (
           <All techSelected={techSelected} widthScreen={widthScreen} />
