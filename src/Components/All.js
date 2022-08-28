@@ -34,7 +34,8 @@ const All = (props) => {
         setNews(refNews.current);
         refLoading.current = false;
         setLoading(refLoading.current);
-      });
+      })
+      .catch(e=>console.log(e))
   }
 
   function saveNewsStorage(createdAt, storyTitle, storyUrl, commentText) {
