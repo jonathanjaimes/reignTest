@@ -1,5 +1,6 @@
 import React from "react";
 import Pagination from "@mui/material/Pagination";
+import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import moment from "moment";
 
 const MyFaves = (props) => {
@@ -22,9 +23,12 @@ const MyFaves = (props) => {
   }
 
   React.useEffect(() => {
-    setNewsFaves(JSON.parse(localStorage.getItem("newsSelected")));
-
-    setMaxPage(Math.ceil(newsFaves?.length / 8));
+    if (JSON.parse(localStorage.getItem("newsSelected")) != null) {
+      let arrayNews = JSON.parse(localStorage.getItem("newsSelected"));
+      let arrayInvert = arrayNews.reverse();
+      setNewsFaves(arrayInvert);
+      setMaxPage(Math.ceil(newsFaves?.length / 8));
+    }
   }, []);
 
   React.useEffect(() => {
@@ -33,6 +37,25 @@ const MyFaves = (props) => {
 
   return (
     <>
+      {newsFaves.length < 1 && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <div style={{ textAlign: "center", margin: "50px 0 20px 0" }}>
+            <SentimentVeryDissatisfiedIcon
+              sx={{ fontSize: "100px", color: "#ededed" }}
+            />
+          </div>
+          <p style={{ textAlign: "center", margin: "0", color: "#969696" }}>
+            You have not added news to your favorites section yet.
+          </p>
+        </div>
+      )}
       <div
         style={{
           display: "flex",
@@ -50,7 +73,10 @@ const MyFaves = (props) => {
                 maxWidth: "30.375rem",
                 minHeight: "5.625rem",
                 height: "auto",
-                margin: "2.375rem 1rem 1.875rem 1rem",
+                margin:
+                  props.widthScreen < 920
+                    ? "2.375rem 0 1.875rem 0"
+                    : "2.375rem 1rem 1.875rem 1rem",
                 padding: "0 0 0 1.625rem",
                 opacity: "0.8",
                 borderRadius: "6px",
@@ -118,6 +144,7 @@ const MyFaves = (props) => {
                 }}
               >
                 <img
+                  style={{ cursor: "pointer" }}
                   onClick={() => {
                     deleteNewsStorage(index);
                   }}

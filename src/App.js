@@ -9,6 +9,7 @@ import Select from "@mui/material/Select";
 function App() {
   const [techSelected, setTechSelected] = React.useState("");
   const [showFaves, setShowFaves] = React.useState(false);
+  const [widthScreen, setWidthScreen] = React.useState();
 
   const handleChange = (e) => {
     setTechSelected(e.target.value);
@@ -16,6 +17,8 @@ function App() {
   };
 
   React.useEffect(() => {
+    setWidthScreen(window.screen.width);
+
     if (localStorage.getItem("techSelected") != null) {
       setTechSelected(localStorage.getItem("techSelected"));
     }
@@ -26,16 +29,18 @@ function App() {
       <div
         style={{
           margin: "0 0 4.375rem",
-          padding: "2.75rem 0 2.625rem 9.375rem",
+          padding:
+            widthScreen > 920
+              ? "2.75rem 9.375rem 2.625rem 9.375rem"
+              : "2.75rem 0 2.625rem 0",
           boxShadow: "0 1px 4px 0 rgba(0, 21, 41, 0.12)",
           backgroundImage:
             "linear-gradient(to bottom, #ececec -32%, #fff 124%)",
         }}
       >
-        <span
+        <p
           style={{
-            width: "13rem",
-            height: "1.75rem",
+            margin: "0",
             objectFit: "contain",
             fontFamily: "Baskerville",
             fontSize: "1.75rem",
@@ -45,11 +50,13 @@ function App() {
             lineHeight: "1",
             letterSpacing: "normal",
             color: "#3b3b3b",
+            textAlign: widthScreen > 920 ? "left" : "center",
           }}
         >
           HACKER NEWS
-        </span>
+        </p>
       </div>
+
       <div style={{ display: "flex", justifyContent: "center" }}>
         <div
           onClick={() => {
@@ -124,8 +131,11 @@ function App() {
         <>
           <div
             style={{
-              width: "17rem",
-              margin: "3.938rem 7.125rem 2.63rem 9.375rem",
+              width: widthScreen < 920 ? "90%" : "17rem",
+              margin:
+                widthScreen < 902
+                  ? "3.938rem 0 2.63rem 5%"
+                  : "3.938rem 7.125rem 2.63rem 9.375rem",
             }}
           >
             <FormControl fullWidth>
@@ -181,9 +191,9 @@ function App() {
 
       <div style={{ padding: "0 10% 0 10%", margin: "0 0 5rem 0" }}>
         {techSelected?.length > 0 && !showFaves && (
-          <All techSelected={techSelected} />
+          <All techSelected={techSelected} widthScreen={widthScreen} />
         )}
-        {showFaves && <MyFaves />}
+        {showFaves && <MyFaves widthScreen={widthScreen} />}
       </div>
     </div>
   );

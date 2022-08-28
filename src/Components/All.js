@@ -100,7 +100,10 @@ const All = (props) => {
                     maxWidth: "30.375rem",
                     minHeight: "5.625rem",
                     height: "auto",
-                    margin: "2.375rem 1rem 1.875rem 1rem",
+                    margin:
+                      props.widthScreen < 920
+                        ? "2.375rem 0"
+                        : "2.375rem 1rem 1.875rem 1rem",
                     padding: "0 0 0 1.625rem",
                     opacity: "0.8",
                     borderRadius: "6px",
@@ -174,6 +177,7 @@ const All = (props) => {
                         el.comment_text == notice.comment_text
                     ) == undefined ? (
                       <img
+                        style={{ cursor: "pointer" }}
                         onClick={() => {
                           setFlagShowHeart(!flagShowHeart);
                           saveNewsStorage(
@@ -187,6 +191,7 @@ const All = (props) => {
                       />
                     ) : (
                       <img
+                        style={{ cursor: "pointer" }}
                         onClick={() => {
                           setFlagShowHeart(!flagShowHeart);
                           saveNewsStorage(
