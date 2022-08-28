@@ -5,6 +5,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import AnnouncementIcon from "@mui/icons-material/Announcement";
 
 function App() {
   const [techSelected, setTechSelected] = React.useState("");
@@ -25,7 +26,7 @@ function App() {
   }, []);
 
   return (
-    <div>
+    <div style={{ padding: "0 0 10px 0" }}>
       <div
         style={{
           margin: "0 0 4.375rem",

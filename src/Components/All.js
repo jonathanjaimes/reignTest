@@ -1,7 +1,9 @@
 import React from "react";
 import Pagination from "@mui/material/Pagination";
 import moment from "moment";
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, Modal } from "@mui/material";
+import ReportGmailerrorredIcon from "@mui/icons-material/ReportGmailerrorred";
+import Button from "@mui/material/Button";
 
 const All = (props) => {
   const refTotalPages = React.useRef();
@@ -14,6 +16,9 @@ const All = (props) => {
   const [flagShowHeart, setFlagShowHeart] = React.useState(false);
   const refLoading = React.useRef();
   const [loading, setLoading] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   function peticion(tech, page) {
     setLoading(true);
@@ -69,6 +74,35 @@ const All = (props) => {
 
   return (
     <>
+      <Modal open={open} onClose={handleClose}>
+        <div
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: "50%",
+            backgroundColor: "#fff",
+            boxShadow: "24px",
+            padding: "20px",
+          }}
+        >
+          <div style={{ textAlign: "center" }}>
+            <ReportGmailerrorredIcon
+              sx={{ fontSize: "50px", color: "#ff0000" }}
+            />
+          </div>
+          <p style={{ textAlign: "center" }}>
+            Oops... Sorry, the page you are trying to access does not exist.
+          </p>
+          <div style={{ textAlign: "center" }}>
+            <Button onClick={handleClose} variant="outlined">
+              Close
+            </Button>
+          </div>
+        </div>
+      </Modal>
+
       {loading && (
         <div
           style={{
@@ -88,7 +122,7 @@ const All = (props) => {
               display: "flex",
               flexWrap: "wrap",
               justifyContent: "space-between",
-              padding: "0 5% 0 5%",
+              padding: "0 5% 50px 5%",
             }}
           >
             {news?.map((notice, index) => {
@@ -150,7 +184,11 @@ const All = (props) => {
                         cursor: "pointer",
                       }}
                       onClick={() => {
-                        window.open(notice.story_url);
+                        if (!(notice.story_url == null)) {
+                          window.open(notice.story_url);
+                        } else {
+                          handleOpen();
+                        }
                       }}
                     >
                       {notice.story_title || notice.title}
