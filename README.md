@@ -28,10 +28,15 @@ Comments:
 
 Captures:
 
+
 Desktop version:
 
-![captures](/public/img/escritorio.PNG "Desktop version")
+<p align="center">
+  <img width="800px" src="/public/img/escritorio.PNG">
+</p>
 
 Mobile version:
 
-![captures](/public/img/movil.jpeg "Mobile version")
+<p align="center">
+  <img height="500px" src="/public/img/movil.jpeg">
+</p>
